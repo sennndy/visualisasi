@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Analisis Mobil Lengkap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .row { display: flex; flex-wrap: wrap; margin: 0 -10px; }
+        .col-12 { width: 100%; }
+        .col-6 { width: 50%; }
+        .col-3 { width: 25%; }
+
+        .plot-wrapper { padding: 10px; box-sizing: border-box; }
+
+        .metric-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .metric-card:hover { transform: translateY(-5px); }
+        .metric-card h3 { font-size: 1em; color: #666; margin-top: 0; text-transform: uppercase; }
+        .metric-card .value { font-size: 2.5em; font-weight: bold; margin: 5px 0 0; }
+
+        .color-blue { color: #3498db; }
+        .color-green { color: #2ecc71; }
+        .color-red { color: #e74c3c; }
+        .color-orange { color: #f39c12; }
+
+        .plot-container {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            height: 100%;
+        }
+        .plot-container h2 {
+            font-size: 1.2em;
+            color: #333;
+            text-align: center;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #eee;
+        }
+        .plot-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 3px;
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dashboard Analisis Data Mobil</h1>
+
+        <div class="row" style="margin-bottom: 30px;">
+            {% for metric in key_metrics %}
+            <div class="plot-wrapper col-3">
+                <div class="metric-card">
+                    <h3>{{ metric.title }}</h3>
+                    <p class="value color-{{ metric.color }}">{{ metric.value }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            {% for plot in plots %}
+            <div class="plot-wrapper col-{{ plot.span }}">
+                <div class="plot-container">
+                    <h2>{{ plot.title }}</h2>
+                    <img src="{{ url_for('static', filename='images/' + plot.filename) }}" alt="{{ plot.title }}">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
